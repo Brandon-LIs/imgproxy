@@ -169,6 +169,6 @@
     { "source": "/cdnjs/:path*", "destination": "https://cdnjs.cloudflare.com/:path*" },
     { "source": "/my/:path*", "destination": "https://cdn.jsdelivr.net/gh/Brandon-LIs/:path*" },
     { "source": "/avatar/:path*", "destination": "https://gravatar.com/avatar/:path*" },
-    { "source": "/((?!$).*)", "destination": "https://raw.githubusercontent.com/Brandon-LIs/blogimg/refs/heads/main/$1" }
+    { "source": "/((?!$).*)", "destination": "https://cdn.jsdelivr.net/gh/Brandon-LIs/blogimg@refs/heads/main/$1" }
   ]
 }
