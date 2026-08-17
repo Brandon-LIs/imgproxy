@@ -62,7 +62,18 @@
       ]
     },
     {
-      "source": "/(.*\\.(?:js|mjs))",
+      "source": "/avatar/:path*",
+      "headers": [
+        { "key": "Access-Control-Allow-Origin", "value": "*" },
+        { "key": "Access-Control-Allow-Methods", "value": "GET, HEAD, OPTIONS" },
+        { "key": "Access-Control-Allow-Headers", "value": "*" },
+        { "key": "Access-Control-Max-Age", "value": "86400" },
+        { "key": "Vary", "value": "Origin" },
+        { "key": "Cache-Control", "value": "public, max-age=86400" }
+      ]
+    },
+    {
+      "source": "/(.*\.(?:js|mjs))",
       "headers": [
         { "key": "Content-Type", "value": "application/javascript" }
       ]
@@ -134,6 +145,7 @@
     { "source": "/wp/:path*", "destination": "https://cdn.jsdelivr.net/wp/:path*" },
     { "source": "/cdnjs/:path*", "destination": "https://cdnjs.cloudflare.com/:path*" },
     { "source": "/my/:path*", "destination": "https://cdn.jsdelivr.net/gh/Brandon-LIs/:path*" },
+    { "source": "/avatar/:path*", "destination": "https://gravatar.com/avatar/:path*" },
     { "source": "/((?!$).*)", "destination": "https://raw.githubusercontent.com/Brandon-LIs/blogimg/refs/heads/main/$1" }
   ]
 }

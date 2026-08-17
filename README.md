@@ -6,6 +6,7 @@
 - 反代 jsDelivr：`/npm/*`、`/gh/*`、`/wp/*`
 - 反代 cdnjs：`/cdnjs/*`
 - 反代个人仓库：`/my/*`
+- 反代 Gravatar：`/avatar/*`
 - 反代图床：其余路径 → GitHub 图床源
 
 ## 优化
