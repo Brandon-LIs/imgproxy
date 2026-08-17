@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>公益 jsDelivr 加速服务</title>
+  <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/animate.css/4.1.1/animate.min.css" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: "SF Mono", "JetBrains Mono", -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      color: #1e293b;
+      background: #f8fafc;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+    .wrap { max-width: 720px; margin: 0 auto; padding: 0 24px; }
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+    .tag { font-size: 12px; letter-spacing: 4px; text-transform: uppercase; color: #3b82f6; margin-bottom: 24px; }
+    .title { font-size: 30px; font-weight: 700; letter-spacing: 1px; line-height: 1.4; margin-bottom: 16px; color: #0f172a; }
+    .intro { font-size: 14px; color: #64748b; line-height: 1.9; margin-bottom: 40px; max-width: 520px; }
+    .rule { width: 40px; height: 2px; background: #3b82f6; margin: 0 auto 28px; border-radius: 2px; }
+
+    .tool { width: 100%; max-width: 560px; text-align: left; margin-bottom: 36px; }
+    .tool label { display: block; font-size: 12px; letter-spacing: 1px; color: #3b82f6; margin-bottom: 8px; }
+    .field { display: flex; gap: 10px; }
+    .field input {
+      flex: 1; padding: 12px 14px; font-size: 13px; font-family: "SF Mono", monospace;
+      color: #1e293b; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 8px;
+      outline: none; transition: border-color .2s ease; box-shadow: 0 1px 2px rgba(0,0,0,.04);
+    }
+    .field input:focus { border-color: #3b82f6; box-shadow: 0 0 0 3px rgba(59,130,246,.12); }
+    .field input::placeholder { color: #94a3b8; }
+    .copy {
+      padding: 0 16px; font-size: 13px; color: #ffffff; background: #3b82f6;
+      border: 1px solid #3b82f6; border-radius: 8px; cursor: pointer;
+      transition: all .2s ease; white-space: nowrap;
+    }
+    .copy:hover { background: #2563eb; border-color: #2563eb; }
+    .field + label { margin-top: 18px; }
+    .msg { margin-top: 14px; font-size: 12px; min-height: 16px; }
+    .msg.ok { color: #16a34a; }
+    .msg.err { color: #dc2626; }
+
+    .status { display: inline-flex; align-items: center; gap: 10px; font-size: 14px; color: #64748b; margin-bottom: 28px; }
+    .dot { width: 8px; height: 8px; border-radius: 50%; background: #22c55e; box-shadow: 0 0 10px rgba(34,197,94,.5); animation: pulse 1.8s ease-in-out infinite; }
+    @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: .35; } }
+    .btn {
+      display: inline-block; padding: 12px 30px; font-size: 14px; letter-spacing: 1px;
+      color: #ffffff; background: #3b82f6; border: 1px solid #3b82f6; border-radius: 999px;
+      text-decoration: none; cursor: pointer; transition: all .25s ease;
+    }
+    .btn:hover { background: #2563eb; border-color: #2563eb; }
+    .scroll-hint { position: absolute; bottom: 28px; left: 50%; transform: translateX(-50%); font-size: 11px; letter-spacing: 3px; color: #94a3b8; animation: float 2.4s ease-in-out infinite; }
+    @keyframes float { 0%,100% { transform: translate(-50%,0); } 50% { transform: translate(-50%,8px); } }
+
+    .section { padding: 110px 0; border-top: 1px solid #e2e8f0; }
+    .section h2 { font-size: 18px; font-weight: 700; color: #0f172a; margin-bottom: 14px; }
+    .section p { font-size: 14px; color: #64748b; line-height: 1.9; }
+    .section code { font-family: "SF Mono", monospace; color: #0f172a; background: #f1f5f9; padding: 2px 6px; border-radius: 4px; font-size: 13px; }
+    .steps { margin: 18px 0 0; padding: 0; list-style: none; counter-reset: st; }
+    .steps li { position: relative; padding: 0 0 26px 44px; font-size: 14px; color: #475569; line-height: 1.8; }
+    .steps li::before {
+      counter-increment: st; content: counter(st);
+      position: absolute; left: 0; top: 0; width: 28px; height: 28px; line-height: 26px;
+      text-align: center; border-radius: 50%; border: 1px solid #3b82f6; color: #3b82f6; font-size: 12px;
+    }
+    .steps li:last-child { padding-bottom: 0; }
+    .rules { list-style: none; padding: 0; margin: 18px 0 0; }
+    .rules li { position: relative; padding: 0 0 14px 22px; font-size: 14px; color: #64748b; line-height: 1.8; }
+    .rules li::before { content: ""; position: absolute; left: 2px; top: 9px; width: 6px; height: 6px; border-radius: 50%; background: #3b82f6; }
+    footer { padding: 50px 0; text-align: center; font-size: 12px; color: #94a3b8; border-top: 1px solid #e2e8f0; }
+    footer a { color: #3b82f6; text-decoration: none; }
+    .reveal { opacity: 0; }
+  </style>
+</head>
+<body>
+  <section class="hero">
+    <div class="wrap">
+      <div class="tag animate__animated animate__fadeIn">PUBLIC WELFARE · FREE</div>
+      <div class="rule animate__animated animate__fadeIn"></div>
+      <h1 class="title animate__animated animate__fadeInUp">公益 jsDelivr 加速服务</h1>
+      <p class="intro animate__animated animate__fadeInUp animate__delay-1s">
+        一个面向开发者的公益 jsDelivr / cdnjs 加速服务，免费提供静态资源加速，
+        让库文件、图片、文档在国内访问更快、更稳。
+      </p>
+
+      <div class="tool animate__animated animate__fadeInUp animate__delay-1s">
+        <label>地址转换器 · 输入 jsDelivr 地址</label>
+        <div class="field">
+          <input id="src" type="text" placeholder="cdn.jsdelivr.net/npm/axios@1/dist/axios.min.js" />
+        </div>
+        <label>转换结果</label>
+        <div class="field">
+          <input id="out" type="text" readonly placeholder="jsd.oopss.top/npm/..." />
+          <button class="copy" id="copy">复制</button>
+        </div>
+        <div class="msg" id="msg"></div>
+      </div>
+
+      <div class="status animate__animated animate__fadeIn animate__delay-2s">
+        <span class="dot"></span>服务正常
+      </div>
+      <div class="animate__animated animate__fadeInUp animate__delay-2s">
+        <a class="btn" href="https://oopss.top">回到首页</a>
+      </div>
+    </div>
+    <div class="scroll-hint">SCROLL ↓</div>
+  </section>
+
+  <div class="wrap">
+    <section class="section reveal">
+      <h2>如何使用</h2>
+      <p>只需把 jsDelivr 地址中的 <code>cdn.jsdelivr.net</code> 替换为 <code>jsd.oopss.top</code> 即可，其余路径保持不变。</p>
+      <ol class="steps">
+        <li>复制你的 jsDelivr 地址，例如 <code>https://cdn.jsdelivr.net/npm/axios@1/dist/axios.min.js</code></li>
+        <li>把域名替换为本站：<code>https://jsd.oopss.top/npm/axios@1/dist/axios.min.js</code></li>
+        <li>在上方转换器输入原地址，一键生成并复制加速链接，直接用于项目即可。</li>
+      </ol>
+      <p class="reveal">支持的路径：<code>/npm/*</code>、<code>/gh/*</code>、<code>/wp/*</code> 对应 jsDelivr，<code>/cdnjs/*</code> 对应 cdnjs。</p>
+    </section>
+
+    <section class="section reveal">
+      <h2>使用规则 · 防滥用</h2>
+      <ul class="rules">
+        <li>本站为公益服务，仅用于静态资源（js / css / 图片 / 字体等）加速，请勿用于大文件分发。</li>
+        <li>禁止恶意刷流量、高并发压测、爬虫批量拉取，一经发现将封锁对应来源。</li>
+        <li>仅代理 jsDelivr / cdnjs / 本站图床的公开资源，不提供任意网址反代（不是开放式代理）。</li>
+        <li>请勿将本站用于侵权、违规或商业大规模使用，遵守原资源提供方条款。</li>
+        <li>服务基于 Netlify 免费额度，请珍惜资源；如长期高负载将仅对普通用户限制或暂停。</li>
+      </ul>
+    </section>
+  </div>
+
+  <footer class="reveal">© OOPSS · 公益 jsDelivr 加速服务 · <a href="https://oopss.top">回到首页</a></footer>
+
+  <script>
+    const DOMAINS = {
+      "https://cdn.jsdelivr.net/": "",
+      "https://cdnjs.cloudflare.com/": "cdnjs/"
+    };
+    const src = document.getElementById("src");
+    const out = document.getElementById("out");
+    const msg = document.getElementById("msg");
+    const copy = document.getElementById("copy");
+
+    function convert() {
+      const v = src.value.trim().replace(/^https?:\/\//, "");
+      msg.className = "msg";
+      if (!v) { out.value = ""; msg.textContent = ""; return; }
+      for (const [host, prefix] of Object.entries(DOMAINS)) {
+        const hostNoProto = host.replace(/^https:\/\//, "");
+        if (v.startsWith(hostNoProto)) {
+          out.value = "https://jsd.oopss.top/" + prefix + v.slice(hostNoProto.length);
+          msg.classList.add("ok");
+          msg.textContent = "已生成加速地址";
+          return;
+        }
+      }
+      out.value = "";
+      msg.classList.add("err");
+      msg.textContent = "请输入有效的 jsDelivr 或 cdnjs 地址";
+    }
+
+    src.addEventListener("input", convert);
+    copy.addEventListener("click", () => {
+      if (!out.value) return;
+      navigator.clipboard.writeText(out.value).then(() => {
+        const t = copy.textContent;
+        copy.textContent = "已复制";
+        setTimeout(() => (copy.textContent = t), 1200);
+      });
+    });
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting) {
+          e.target.classList.add("animate__animated", "animate__fadeInUp");
+          e.target.style.opacity = 1;
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.15 });
+    document.querySelectorAll(".reveal").forEach((el) => observer.observe(el));
+  </script>
+</body>
+</html>
