@@ -14,7 +14,7 @@
         { "key": "Access-Control-Allow-Headers", "value": "*" },
         { "key": "Access-Control-Max-Age", "value": "86400" },
         { "key": "Vary", "value": "Origin" },
-        { "key": "Cache-Control", "value": "public, max-age=3600, s-maxage=86400" }
+        { "key": "Cache-Control", "value": "public, max-age=604800, s-maxage=2592000" }
       ]
     },
     {
