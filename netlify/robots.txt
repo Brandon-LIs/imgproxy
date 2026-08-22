@@ -1,0 +1,7 @@
+User-agent: *
+Disallow: /npm/
+Disallow: /gh/
+Disallow: /wp/
+Disallow: /cdnjs/
+Disallow: /my/
+Disallow: /avatar/

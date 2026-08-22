@@ -1,0 +1,128 @@
+# 全局 CORS：全部同意
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Access-Control-Allow-Origin = "*"
+    Access-Control-Allow-Methods = "GET, HEAD, OPTIONS, POST"
+    Access-Control-Allow-Headers = "*"
+    Access-Control-Max-Age = "86400"
+    Vary = "Origin"
+
+# 显式补正静态资源 Content-Type，避免反代后 MIME 丢失/错误
+[[headers]]
+  for = "*.js"
+  [headers.values]
+    Content-Type = "application/javascript"
+
+[[headers]]
+  for = "*.mjs"
+  [headers.values]
+    Content-Type = "application/javascript"
+
+[[headers]]
+  for = "*.css"
+  [headers.values]
+    Content-Type = "text/css"
+
+[[headers]]
+  for = "*.json"
+  [headers.values]
+    Content-Type = "application/json"
+
+[[headers]]
+  for = "*.map"
+  [headers.values]
+    Content-Type = "application/json"
+
+[[headers]]
+  for = "*.png"
+  [headers.values]
+    Content-Type = "image/png"
+
+[[headers]]
+  for = "*.jpg"
+  [headers.values]
+    Content-Type = "image/jpeg"
+
+[[headers]]
+  for = "*.jpeg"
+  [headers.values]
+    Content-Type = "image/jpeg"
+
+[[headers]]
+  for = "*.svg"
+  [headers.values]
+    Content-Type = "image/svg+xml"
+
+[[headers]]
+  for = "*.woff2"
+  [headers.values]
+    Content-Type = "font/woff2"
+
+[[headers]]
+  for = "*.woff"
+  [headers.values]
+    Content-Type = "font/woff"
+
+[[headers]]
+  for = "*.ttf"
+  [headers.values]
+    Content-Type = "font/ttf"
+
+[[headers]]
+  for = "*.eot"
+  [headers.values]
+    Content-Type = "application/vnd.ms-fontobject"
+
+[[headers]]
+  for = "*.wasm"
+  [headers.values]
+    Content-Type = "application/wasm"
+
+# 反代规则
+[[redirects]]
+  from = "/npm/*"
+  to = "https://cdn.jsdelivr.net/npm/:splat"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/gh/*"
+  to = "https://cdn.jsdelivr.net/gh/:splat"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/wp/*"
+  to = "https://cdn.jsdelivr.net/wp/:splat"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/cdnjs/*"
+  to = "https://cdnjs.cloudflare.com/:splat"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/my/*"
+  to = "https://cdn.jsdelivr.net/gh/Brandon-LIs/:splat"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/avatar/*"
+  to = "https://gravatar.com/avatar/:splat"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/"
+  to = "/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/*"
+  to = "https://raw.githubusercontent.com/Brandon-LIs/blogimg/refs/heads/main/:splat"
+  status = 200
+  force = true
